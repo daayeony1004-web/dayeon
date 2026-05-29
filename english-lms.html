@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samsung English Academy</title>
+<style>
+:root {
+    --blue:#1428A0; --blue-dk:#0F1F7A; --blue-lt:#2D6BE4; --blue-pale:#EEF1FF;
+    --bg:#F4F5F8; --card:#fff; --t1:#1C1C1E; --t2:#636366; --t3:#AEAEB2;
+    --border:#E5E5EA; --green:#34C759; --orange:#FF9F0A; --red:#FF3B30;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic','맑은 고딕',Arial,sans-serif;background:var(--bg);color:var(--t1);line-height:1.6}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;right:0;height:60px;background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;box-shadow:0 2px 12px rgba(20,40,160,.35)}
+.brand{cursor:pointer}
+.brand-sub{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:3px;text-transform:uppercase}
+.brand-main{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.5px}
+.nav-wrap{display:flex;gap:4px}
+.nav-btn{background:none;border:none;color:rgba(255,255,255,.75);font-size:14px;font-weight:500;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s}
+.nav-btn:hover,.nav-btn.on{background:rgba(255,255,255,.18);color:#fff}
+.avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* LAYOUT */
+.wrap{margin-top:60px}
+.pg{display:none}.pg.on{display:block}
+
+/* HERO */
+.hero{background:linear-gradient(140deg,#0F1F7A 0%,#1428A0 55%,#2D6BE4 100%);padding:52px 24px 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.04);top:-110px;right:-50px}
+.hero-in{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);padding:5px 14px;border-radius:20px;font-size:12px;color:rgba(255,255,255,.88);letter-spacing:.5px;margin-bottom:16px}
+.hero h1{font-size:36px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1.2;margin-bottom:12px}
+.hero h1 span{color:rgba(255,255,255,.55);font-weight:300}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.68);margin-bottom:28px;max-width:440px;line-height:1.7}
+.hero-stats{display:flex;gap:32px}
+.h-stat .v{font-size:25px;font-weight:800;color:#fff}
+.h-stat .l{font-size:12px;color:rgba(255,255,255,.52)}
+
+/* CONTENT */
+.ct{max-width:1100px;margin:0 auto;padding:32px 24px}
+.sec-title{font-size:20px;font-weight:700;letter-spacing:-.5px;margin-bottom:16px}
+
+/* PROGRESS */
+.p-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
+.p-card{background:var(--card);border-radius:14px;padding:20px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.p-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.p-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.p-pct{font-size:21px;font-weight:700;color:var(--blue)}
+.p-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.p-sub{font-size:12px;color:var(--t2)}
+.bar-t{background:var(--bg);border-radius:4px;height:5px;margin-top:12px;overflow:hidden}
+.bar-f{height:100%;border-radius:4px;transition:width .8s ease}
+
+/* CHANNEL CARDS */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.ch-card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer;transition:transform .25s,box-shadow .25s}
+.ch-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.12);border-color:transparent}
+.ch-banner{height:140px;position:relative;display:flex;align-items:center;justify-content:center}
+.ch-banner::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.14)}
+.ch-emoji{font-size:54px;position:relative;z-index:1}
+.ch-lv{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;z-index:2}
+.ch-cat{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.4);color:#fff;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;z-index:2}
+.ch-ring{position:absolute;bottom:10px;right:10px;z-index:2;width:42px;height:42px}
+.ch-ring svg{display:block}
+.rg-bg{fill:none;stroke:rgba(255,255,255,.25);stroke-width:3}
+.rg-fg{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round}
+.rg-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.ch-body{padding:16px 18px 18px}
+.ch-body h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.ch-body p{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:12px}
+.ch-meta{display:flex;gap:12px;margin-bottom:12px}
+.ch-mi{font-size:12px;color:var(--t2)}
+.ch-mi b{color:var(--blue)}
+.ch-foot{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border)}
+.ch-prg{font-size:12px;color:var(--t2)}
+.ch-prg strong{color:var(--blue)}
+.btn-start{border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:#fff;font-family:inherit;transition:filter .2s}
+.btn-start:hover{filter:brightness(1.12)}
+
+/* DETAIL PAGE */
+.det-ct{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--blue);font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:20px;padding:0}
+.back-btn:hover{opacity:.7}
+.det-hdr{background:var(--card);border-radius:18px;padding:26px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;gap:18px;align-items:flex-start;margin-bottom:22px}
+.det-ico{width:66px;height:66px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+.det-info h2{font-size:21px;font-weight:800;margin-bottom:6px}
+.det-info .det-desc{font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.tag-b{background:var(--blue-pale);color:var(--blue)}
+.tag-g{background:#F2F2F7;color:var(--t2)}
+.det-stats{display:flex;gap:22px;padding-top:14px;border-top:1px solid var(--border)}
+.dst .v{font-size:17px;font-weight:700;color:var(--blue)}
+.dst .l{font-size:11px;color:var(--t2)}
+
+/* PLAYER LAYOUT */
+.player-layout{display:grid;grid-template-columns:1fr 370px;gap:18px;align-items:start}
+
+/* Left: player */
+.player-box{background:#000;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/9;box-shadow:0 4px 20px rgba(0,0,0,.22)}
+.player-box iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.player-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111;color:rgba(255,255,255,.55);gap:14px;cursor:pointer}
+.ph-circle{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:26px;transition:background .2s}
+.player-ph:hover .ph-circle{background:var(--blue)}
+.ph-txt{font-size:14px}
+
+.player-info-box{background:var(--card);border-radius:14px;padding:16px 18px;margin-top:12px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.player-title{font-size:14px;font-weight:700;line-height:1.5;margin-bottom:12px}
+.player-actions{display:flex;gap:8px;align-items:center}
+.btn-prev,.btn-next{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.btn-prev:hover,.btn-next:hover{background:var(--blue-pale);border-color:var(--blue-pale)}
+.btn-prev:disabled,.btn-next:disabled{opacity:.3;cursor:not-allowed}
+.btn-done{flex:1;padding:9px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+.btn-done.off{background:var(--blue-pale);color:var(--blue)}
+.btn-done.on{background:var(--green);color:#fff}
+.btn-done:hover{filter:brightness(1.07)}
+
+/* Right: video list */
+.vid-list{background:var(--card);border-radius:14px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;position:sticky;top:72px;max-height:calc(100vh - 90px);display:flex;flex-direction:column}
+.vid-list-hdr{padding:13px 15px;font-size:13px;font-weight:700;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--card)}
+.vid-list-body{overflow-y:auto;flex:1}
+.vid-item{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s}
+.vid-item:last-child{border-bottom:none}
+.vid-item:hover{background:var(--bg)}
+.vid-item.cur{background:var(--blue-pale)}
+.vid-num{width:24px;height:24px;border-radius:6px;background:var(--bg);color:var(--t2);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vid-num.done{background:var(--green);color:#fff}
+.vid-item.cur .vid-num:not(.done){background:var(--blue);color:#fff}
+.vi-thumb{width:76px;height:43px;border-radius:6px;overflow:hidden;flex-shrink:0;background:#ddd;position:relative}
+.vi-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vi-thumb-ov{position:absolute;inset:0;background:rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;opacity:0;transition:opacity .15s}
+.vid-item:hover .vi-thumb-ov{opacity:1}
+.vi-info{flex:1;min-width:0}
+.vi-ttl{font-size:12px;font-weight:600;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;color:var(--t1);margin-bottom:2px}
+.vid-item.cur .vi-ttl{color:var(--blue)}
+.vi-dur{font-size:11px;color:var(--t2)}
+
+/* FOOTER */
+footer{background:#1C1C1E;color:rgba(255,255,255,.38);text-align:center;padding:36px 24px;margin-top:60px}
+.f-logo{font-size:16px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:6px}
+footer p{font-size:12px;line-height:1.7}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:24px;background:#1C1C1E;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.2);z-index:999;opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .25s,transform .25s}
+#toast.on{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:800px){
+    .player-layout{grid-template-columns:1fr}
+    .vid-list{position:static;max-height:360px}
+    .p-grid{grid-template-columns:1fr}
+    .ch-grid{grid-template-columns:1fr}
+    .nav-wrap{display:none}
+    .hero h1{font-size:26px}
+    .det-hdr{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+    <div class="brand" onclick="goDash()">
+        <div class="brand-sub">Samsung</div>
+        <div class="brand-main">English Academy</div>
+    </div>
+    <div class="nav-wrap">
+        <button class="nav-btn on" id="n0" onclick="goDash()">홈</button>
+        <button class="nav-btn" id="n1" onclick="goDash()">강의</button>
+        <button class="nav-btn" id="n2" onclick="goDash()">학습 현황</button>
+    </div>
+    <div class="avatar">학</div>
+</header>
+
+<div class="wrap">
+
+<!-- 대시보드 -->
+<div id="pgDash" class="pg on">
+    <div class="hero">
+        <div class="hero-in">
+            <div class="hero-badge">🎓 기초 영어 회화 전문 과정</div>
+            <h1>영어 회화,<br><span>지금 바로 시작하세요</span></h1>
+            <p class="hero-sub">세계 최고 수준의 유튜브 영어 강사 5인과 함께하는<br>체계적인 기초 영어 회화 학습 플랫폼</p>
+            <div class="hero-stats">
+                <div class="h-stat"><div class="v">5</div><div class="l">전문 채널</div></div>
+                <div class="h-stat"><div class="v" id="hTotal">24</div><div class="l">총 영상 수</div></div>
+                <div class="h-stat"><div class="v">4.87★</div><div class="l">평균 평점</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="ct">
+        <div class="sec-title">나의 학습 현황</div>
+        <div class="p-grid">
+            <div class="p-card">
+                <div class="p-top"><div class="p-ico" style="background:#EEF1FF">📊</div><div class="p-pct" id="pTotal">0%</div></div>
+                <div class="p-name">전체 달성률</div><div class="p-sub" id="subTotal">5개 채널 · 시작 전</div>
+                <div class="bar-t"><div class="bar-f" id="bTotal" style="width:0;background:linear-gradient(90deg,#1428A0,#2D6BE4)"></div></div>
+            </div>
+            <div class="p-card">
+                <div class="p-top"><div class="p-ico" style="background:#FFF3E0">🔥</div><div class="p-pct" style="color:var(--orange)" id="pStreak">0일</div></div>
+                <div class="p-name">연속 학습</div><div class="p-sub">오늘도 이어가세요!</div>
+                <div class="bar-t"><div class="bar-f" id="bStreak" style="width:0;background:linear-gradient(90deg,#FF9F0A,#FFD54F)"></div></div>
+            </div>
+            <div class="p-card">
+                <div class="p-top"><div class="p-ico" style="background:#E8F8EF">✅</div><div class="p-pct" style="color:var(--green)" id="pDone">0개</div></div>
+                <div class="p-name">완료한 강의</div><div class="p-sub" id="subDone">총 24개 강의 중</div>
+                <div class="bar-t"><div class="bar-f" id="bDone" style="width:0;background:linear-gradient(90deg,#34C759,#30D158)"></div></div>
+            </div>
+        </div>
+        <div class="sec-title">학습 채널</div>
+        <div class="ch-grid" id="chGrid"></div>
+    </div>
+</div>
+
+<!-- 강의 상세 -->
+<div id="pgDetail" class="pg">
+    <div class="det-ct">
+        <button class="back-btn" onclick="goDash()">← 강의 목록으로 돌아가기</button>
+        <div class="det-hdr" id="detHdr"></div>
+        <div class="player-layout">
+            <div>
+                <div class="player-box" id="playerBox">
+                    <div class="player-ph" id="playerPh" onclick="playVideo(0)">
+                        <div class="ph-circle">▶</div>
+                        <div class="ph-txt">영상을 선택하여 재생하세요</div>
+                    </div>
+                    <iframe id="playerFrame" src="" style="display:none" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                </div>
+                <div class="player-info-box">
+                    <div class="player-title" id="playerTitle">왼쪽 목록에서 영상을 선택하세요</div>
+                    <div class="player-actions">
+                        <button class="btn-prev" id="btnPrev" onclick="playAdj(-1)" disabled>◀</button>
+                        <button class="btn-done off" id="btnDone" onclick="toggleDone()">○ 완료로 표시</button>
+                        <button class="btn-next" id="btnNext" onclick="playAdj(1)" disabled>▶</button>
+                    </div>
+                </div>
+            </div>
+            <div class="vid-list" id="vidList">
+                <div class="vid-list-hdr">📋 강의 목록</div>
+                <div class="vid-list-body" id="vidListBody"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>
+    <div class="f-logo">SAMSUNG English Academy</div>
+    <p>© 2024 Samsung Electronics Co., Ltd. All rights reserved.<br>본 서비스는 교육 목적으로 운영됩니다.</p>
+</footer>
+<div id="toast"></div>
+
+<script>
+var COURSES = [
+    { id:1, name:"LA영어 (LA-TDLR)", url:"https://www.youtube.com/@LA-TDLR",
+      level:"초급~중급", cat:"미국 영어",
+      desc:"LA에서 실제로 쓰이는 미국 영어 표현과 일상 회화를 배웁니다. 원어민이 현지에서 사용하는 구어체 표현들을 알기 쉽게 설명합니다.",
+      emoji:"🇺🇸", grad:"linear-gradient(135deg,#FF6B6B,#FF8E53)", color:"#FF6B6B",
+      tags:["미국식 발음","슬랭 표현","일상 회화"], rating:4.8, subs:"구독자 다수",
+      videos:[
+        {vid:"OGHo7apPWIY", title:"왕초보를 위한 영어회화 강의 Lesson 001 - 기본 문장 구성하기", dur:"10:24"},
+        {vid:"MDLG58YRPv4", title:"영어로 질문하기 Part 2 [LESSON #008] - 초보 영어회화", dur:"12:15"},
+        {vid:"hyHjOMAPmMs", title:"something / somewhere / someone - 영어회화 기초 [LESSON #16]", dur:"9:58"},
+        {vid:"KvuCt-u56Ww", title:"감각동사 PART 4 - 원어민처럼 표현하기", dur:"11:33"}
+      ]
+    },
+    { id:2, name:"Rachel's English", url:"https://www.youtube.com/@rachelsenglish",
+      level:"전 레벨", cat:"발음 교정",
+      desc:"미국 발음 전문가 Rachel이 알려주는 체계적인 영어 발음 학습법. 모음·자음·억양·연음까지 원어민 발음에 가까워지는 방법을 가르칩니다.",
+      emoji:"🎤", grad:"linear-gradient(135deg,#7C3AED,#A78BFA)", color:"#7C3AED",
+      tags:["발음 교정","억양","연음"], rating:4.9, subs:"구독자 300만+",
+      videos:[
+        {vid:"zash7H0eMQ4", title:"Welcome to Rachel's English – American Pronunciation", dur:"5:12"},
+        {vid:"FW0P4khGAXU", title:"English Pronunciation Just Got EASIER! 🔥", dur:"14:58"},
+        {vid:"oVFNfYRLdqs", title:"English Vocabulary: Perfect Pronunciation for 100s of Words!", dur:"22:30"},
+        {vid:"iKv4oc2zbeA", title:"ENGLISH PRONUNCIATION AND ACCENT TRAINING: Detailed Analysis", dur:"45:20"},
+        {vid:"IEFxRv7AsmE", title:"PERFECT ENGLISH – 10 Must-Know Words | Pronunciation Series", dur:"17:42"},
+        {vid:"HqsmVXlbVOI", title:"PERFECT ENGLISH – 10 Must-Know Words | Top 100 Words", dur:"18:05"},
+        {vid:"FdAL0_QRgrs", title:"Get More from the Videos – How to Study with Rachel", dur:"6:48"}
+      ]
+    },
+    { id:3, name:"BBC Learning English", url:"https://www.youtube.com/@bbclearningenglish",
+      level:"전 레벨", cat:"영국 영어",
+      desc:"전 세계가 신뢰하는 BBC의 공식 영어 교육 채널. 뉴스 영어, 일상 표현, 문법까지 체계적으로 학습할 수 있는 프리미엄 콘텐츠입니다.",
+      emoji:"🇬🇧", grad:"linear-gradient(135deg,#DC2626,#F87171)", color:"#DC2626",
+      tags:["영국식 표현","뉴스 영어","문법"], rating:4.9, subs:"구독자 870만+",
+      videos:[
+        {vid:"fcN0BXzK8bg", title:"BOX SET: 6 Minute English – All About Language Mega Class! (1시간)", dur:"1:02:34"},
+        {vid:"ic4LZrFA1To", title:"BOX SET: 6 Minute English – Food & Drink 2 Mega Class! (30분)", dur:"30:15"},
+        {vid:"_LlyKiROzhU", title:"6 Minute English – Human Emotions Mega Class! (1시간)", dur:"1:01:48"}
+      ]
+    },
+    { id:4, name:"구슬쌤 (Seul Ku)", url:"https://www.youtube.com/@Seul_Ku",
+      level:"초급~중급", cat:"한국인 맞춤",
+      desc:"한국인의 영어 습관을 누구보다 잘 아는 구슬쌤의 맞춤형 영어 강의. 콩글리시 교정부터 원어민 표현까지 실용적인 영어를 배웁니다.",
+      emoji:"🌱", grad:"linear-gradient(135deg,#059669,#34D399)", color:"#059669",
+      tags:["콩글리시 교정","실용 회화","한국인 맞춤"], rating:4.9, subs:"구독자 100만+",
+      videos:[
+        {vid:"uKoTQ_r5KvM", title:"미국인들이 가장 많이 쓰는 실전 영어 표현 50개! (총정리 1탄)", dur:"40:22"},
+        {vid:"0dtzgvFN2LI", title:"오늘 하루를 productive하게 해줄 실전영어 표현 50개 (23탄)", dur:"41:15"},
+        {vid:"GRXUIzkV_HA", title:"미국인이 입에 달고 사는 실전 표현 모음 50개 (26탄)", dur:"39:58"},
+        {vid:"20-dlZsgpFk", title:"미국인이 진짜 달고 사는 실전영어 표현 50개 (28탄)", dur:"42:10"},
+        {vid:"twE9gYRcQbU", title:"Finish Strong하게 해줄 실전 영어 표현 50개 (30탄)", dur:"40:35"},
+        {vid:"5NOqOeZdtfQ", title:"미국인이 매일쓰는 실전영어 표현 50개 (34탄)", dur:"43:22"},
+        {vid:"gW8zB52Q3Uo", title:"미국인들이 가장 많이 쓰는 실전 영어 표현 50개!", dur:"38:47"},
+        {vid:"QvQUucVgmWc", title:"미국인이 매일쓰는 실전영어 표현 50개 – 우리 같이 복습해요", dur:"41:05"}
+      ]
+    },
+    { id:5, name:"Sophie Ban", url:"https://www.youtube.com/@Sophie_Ban",
+      level:"왕초보~초급", cat:"일상 회화",
+      desc:"소피쌤과 함께하는 쉽고 재미있는 영어 회화. 왕초보도 부담 없이 따라올 수 있는 일상 표현 중심으로 자연스러운 영어 실력을 키워드립니다.",
+      emoji:"✨", grad:"linear-gradient(135deg,#D97706,#FCD34D)", color:"#D97706",
+      tags:["왕초보","일상 표현","쉬운 영어"], rating:4.8, subs:"구독자 다수",
+      videos:[
+        {vid:"abk6FsTFh4A", title:"쓸만한 영어 – 마켓에서 쓸 수 있는 영어 회화 표현", dur:"14:32"},
+        {vid:"gZ2y38ofgq4", title:"쓸만한 영어 – 소피반이 생각하는 나쁜 영어 공부법", dur:"16:20"}
+      ]
+    }
+];
+
+var prog = JSON.parse(localStorage.getItem('sea_p') || '{}');
+var streak = parseInt(localStorage.getItem('sea_s') || '0');
+var curCid = null;
+var curIdx = null;
+
+function save() { localStorage.setItem('sea_p', JSON.stringify(prog)); }
+
+function getCourse(cid) {
+    for (var i = 0; i < COURSES.length; i++) { if (COURSES[i].id === cid) return COURSES[i]; }
+    return null;
+}
+function isDone(cid, vi) { return prog[cid] && prog[cid].indexOf(vi) !== -1; }
+function getPct(cid) {
+    var c = getCourse(cid);
+    if (!prog[cid] || !prog[cid].length) return 0;
+    return Math.round(prog[cid].length / c.videos.length * 100);
+}
+function totalVids() { var t = 0; for (var i = 0; i < COURSES.length; i++) t += COURSES[i].videos.length; return t; }
+function totalDone() { var t = 0; var k = Object.keys(prog); for (var i = 0; i < k.length; i++) t += prog[k[i]].length; return t; }
+
+function updateStats() {
+    var tv = totalVids(), td = totalDone(), tp = Math.round(td / tv * 100);
+    document.getElementById('hTotal').textContent   = tv;
+    document.getElementById('pTotal').textContent   = tp + '%';
+    document.getElementById('bTotal').style.width   = tp + '%';
+    document.getElementById('subTotal').textContent = '5개 채널 · ' + td + '개 완료';
+    document.getElementById('pStreak').textContent  = streak + '일';
+    document.getElementById('bStreak').style.width  = Math.min(streak * 10, 100) + '%';
+    document.getElementById('pDone').textContent    = td + '개';
+    document.getElementById('subDone').textContent  = '총 ' + tv + '개 강의 중';
+    document.getElementById('bDone').style.width    = Math.round(td / tv * 100) + '%';
+}
+
+function makeRing(p) {
+    var r = 18, circ = 2 * Math.PI * r, off = circ - (p / 100) * circ;
+    return '<svg width="42" height="42" viewBox="0 0 42 42">'
+        + '<circle class="rg-bg" cx="21" cy="21" r="18"/>'
+        + '<circle class="rg-fg" cx="21" cy="21" r="18" stroke-dasharray="' + circ + '" stroke-dashoffset="' + off + '" transform="rotate(-90 21 21)"/>'
+        + '</svg><div class="rg-txt">' + p + '%</div>';
+}
+
+function renderGrid() {
+    var g = document.getElementById('chGrid'), h = '';
+    for (var i = 0; i < COURSES.length; i++) {
+        var c = COURSES[i];
+        var p = getPct(c.id);
+        var dn = prog[c.id] ? prog[c.id].length : 0;
+        var lbl = p === 0 ? '시작하기' : (p === 100 ? '복습하기' : '이어하기');
+        var cid = c.id;
+        h += '<div class="ch-card" onclick="goDetail(' + cid + ')">'
+           + '<div class="ch-banner" style="background:' + c.grad + '">'
+           + '<div class="ch-emoji">' + c.emoji + '</div>'
+           + '<div class="ch-lv">' + c.level + '</div>'
+           + '<div class="ch-cat">' + c.cat + '</div>'
+           + '<div class="ch-ring">' + makeRing(p) + '</div>'
+           + '</div>'
+           + '<div class="ch-body"><h3>' + c.name + '</h3>'
+           + '<p>' + c.desc.substring(0, 65) + '…</p>'
+           + '<div class="ch-meta">'
+           + '<div class="ch-mi"><b>▶</b> ' + c.videos.length + '개 영상</div>'
+           + '<div class="ch-mi"><b>★</b> ' + c.rating + '</div>'
+           + '<div class="ch-mi"><b>👥</b> ' + c.subs + '</div>'
+           + '</div>'
+           + '<div class="ch-foot">'
+           + '<div class="ch-prg"><strong>' + dn + '/' + c.videos.length + '</strong> 완료</div>'
+           + '<button class="btn-start" style="background:' + c.color + '" onclick="event.stopPropagation();goDetail(' + cid + ')">' + lbl + ' →</button>'
+           + '</div></div></div>';
+    }
+    g.innerHTML = h;
+}
+
+function setNav(idx) {
+    for (var i = 0; i < 3; i++) document.getElementById('n' + i).className = 'nav-btn' + (i === idx ? ' on' : '');
+}
+
+function goDash() {
+    document.getElementById('pgDash').className   = 'pg on';
+    document.getElementById('pgDetail').className = 'pg';
+    setNav(0);
+    renderGrid();
+    updateStats();
+    window.scrollTo(0, 0);
+}
+
+function goDetail(cid) {
+    curCid = cid;
+    curIdx = null;
+    streak++;
+    localStorage.setItem('sea_s', streak);
+    updateStats();
+
+    document.getElementById('pgDash').className   = 'pg';
+    document.getElementById('pgDetail').className = 'pg on';
+    setNav(1);
+    window.scrollTo(0, 0);
+
+    var c = getCourse(cid);
+    var p = getPct(cid);
+    var dn = prog[cid] ? prog[cid].length : 0;
+
+    // 헤더
+    document.getElementById('detHdr').innerHTML
+        = '<div class="det-ico" style="background:' + c.grad + '">' + c.emoji + '</div>'
+        + '<div class="det-info">'
+        + '<h2>' + c.name + '</h2>'
+        + '<div class="det-desc">' + c.desc + '</div>'
+        + '<div class="tags">'
+        + c.tags.map(function(t){ return '<span class="tag tag-b">' + t + '</span>'; }).join('')
+        + '<span class="tag tag-g">' + c.level + '</span>'
+        + '<span class="tag tag-g">' + c.cat + '</span>'
+        + '</div>'
+        + '<div class="det-stats">'
+        + '<div class="dst"><div class="v" id="ds-p">' + p + '%</div><div class="l">학습 완료</div></div>'
+        + '<div class="dst"><div class="v" id="ds-c">' + dn + '/' + c.videos.length + '</div><div class="l">영상 완료</div></div>'
+        + '<div class="dst"><div class="v">' + c.rating + '★</div><div class="l">평점</div></div>'
+        + '</div></div>';
+
+    // 플레이어 초기화
+    var frame = document.getElementById('playerFrame');
+    frame.src = '';
+    frame.style.display = 'none';
+    document.getElementById('playerPh').style.display = 'flex';
+    document.getElementById('playerTitle').textContent = '왼쪽 목록에서 영상을 선택하세요';
+    document.getElementById('btnDone').className = 'btn-done off';
+    document.getElementById('btnDone').textContent = '○ 완료로 표시';
+    document.getElementById('btnPrev').disabled = true;
+    document.getElementById('btnNext').disabled = true;
+
+    renderList(cid, -1);
+}
+
+function renderList(cid, selIdx) {
+    var c = getCourse(cid);
+    document.getElementById('vidList').children[0].textContent = '📋 강의 목록 (' + c.videos.length + '개)';
+    var h = '';
+    for (var i = 0; i < c.videos.length; i++) {
+        var v = c.videos[i];
+        var done = isDone(cid, i);
+        var cur  = (i === selIdx);
+        var numClass = 'vid-num' + (done ? ' done' : '');
+        var itemClass = 'vid-item' + (cur ? ' cur' : '');
+        h += '<div class="' + itemClass + '" onclick="playVideo(' + i + ')">'
+           + '<div class="' + numClass + '">' + (done ? '✓' : (i + 1)) + '</div>'
+           + '<div class="vi-thumb">'
+           + '<img src="https://img.youtube.com/vi/' + v.vid + '/mqdefault.jpg" alt="" loading="lazy">'
+           + '<div class="vi-thumb-ov">▶</div>'
+           + '</div>'
+           + '<div class="vi-info">'
+           + '<div class="vi-ttl">' + v.title + '</div>'
+           + '<div class="vi-dur">⏱ ' + v.dur + '</div>'
+           + '</div></div>';
+    }
+    document.getElementById('vidListBody').innerHTML = h;
+}
+
+function playVideo(idx) {
+    if (curCid === null) return;
+    var c = getCourse(curCid);
+    if (idx < 0 || idx >= c.videos.length) return;
+    curIdx = idx;
+    var v = c.videos[idx];
+
+    // iframe 표시
+    document.getElementById('playerPh').style.display = 'none';
+    var frame = document.getElementById('playerFrame');
+    frame.style.display = 'block';
+    frame.src = 'https://www.youtube.com/embed/' + v.vid + '?autoplay=1&rel=0&modestbranding=1';
+
+    document.getElementById('playerTitle').textContent = v.title;
+
+    // 이전/다음 버튼
+    document.getElementById('btnPrev').disabled = (idx === 0);
+    document.getElementById('btnNext').disabled = (idx === c.videos.length - 1);
+
+    // 완료 버튼 상태
+    refreshDoneBtn();
+
+    // 목록 업데이트
+    renderList(curCid, idx);
+
+    // 모바일: 플레이어로 스크롤
+    if (window.innerWidth < 800) {
+        document.getElementById('playerBox').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+}
+
+function playAdj(d) {
+    playVideo(curIdx === null ? 0 : curIdx + d);
+}
+
+function toggleDone() {
+    if (curCid === null || curIdx === null) return;
+    if (!prog[curCid]) prog[curCid] = [];
+    var pos = prog[curCid].indexOf(curIdx);
+    if (pos === -1) {
+        prog[curCid].push(curIdx);
+        showToast('완료 처리되었습니다 ✓');
+    } else {
+        prog[curCid].splice(pos, 1);
+        showToast('완료가 취소되었습니다');
+    }
+    save();
+    updateStats();
+    refreshDoneBtn();
+    renderList(curCid, curIdx);
+    // 상세 헤더 숫자 갱신
+    var c = getCourse(curCid);
+    var pEl = document.getElementById('ds-p');
+    var cEl = document.getElementById('ds-c');
+    if (pEl) pEl.textContent = getPct(curCid) + '%';
+    if (cEl) cEl.textContent = (prog[curCid] ? prog[curCid].length : 0) + '/' + c.videos.length;
+}
+
+function refreshDoneBtn() {
+    if (curCid === null || curIdx === null) return;
+    var done = isDone(curCid, curIdx);
+    var btn  = document.getElementById('btnDone');
+    btn.className   = 'btn-done ' + (done ? 'on' : 'off');
+    btn.textContent = done ? '✓ 완료됨 (취소하기)' : '○ 완료로 표시';
+}
+
+var _tt;
+function showToast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'on';
+    clearTimeout(_tt);
+    _tt = setTimeout(function(){ el.className = ''; }, 2500);
+}
+
+// 초기화
+renderGrid();
+updateStats();
+</script>
+</body>
+</html>
